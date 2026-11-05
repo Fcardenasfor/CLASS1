@@ -1,0 +1,8 @@
+{
+  "name": "suno-music-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Generate AI music with sunoapi.org — static site + Netlify Functions",
+  "engines": { "node": ">=18" }
+}

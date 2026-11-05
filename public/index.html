@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Song Forge</title>
+  <meta name="description" content="Generate original AI music from a text prompt." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo">♪</span> Song Forge</div>
+    <div class="credits" id="credits" title="Remaining Suno API credits">Credits: —</div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1>Make a song</h1>
+      <p class="sub">Describe it, pick a model, and get two tracks back in about a minute.</p>
+
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-mode="simple" role="tab" aria-selected="true">Simple</button>
+        <button type="button" class="tab" data-mode="custom" role="tab" aria-selected="false">Custom</button>
+      </div>
+
+      <form id="form" autocomplete="off">
+        <div class="mode simple">
+          <label for="prompt">Describe your song</label>
+          <textarea id="prompt" rows="4" maxlength="3000" placeholder="An upbeat summer pop song about road trips with friends, catchy chorus"></textarea>
+          <div class="chips" id="ideas">
+            <button type="button" class="chip">Lo-fi hip hop beat for studying, rainy night</button>
+            <button type="button" class="chip">Epic orchestral trailer music with choir</button>
+            <button type="button" class="chip">Country ballad about an old pickup truck</button>
+            <button type="button" class="chip">80s synthwave driving through neon city</button>
+          </div>
+        </div>
+
+        <div class="mode custom" hidden>
+          <label for="title">Title</label>
+          <input id="title" maxlength="80" placeholder="Midnight Highway" />
+
+          <label for="style">Style</label>
+          <input id="style" maxlength="1000" placeholder="synthwave, retro, driving bass, female vocals" />
+
+          <div id="lyricsWrap">
+            <label for="lyrics">Lyrics</label>
+            <textarea id="lyrics" rows="8" maxlength="5000" placeholder="[Verse]&#10;Headlights cutting through the dark...&#10;&#10;[Chorus]&#10;..."></textarea>
+          </div>
+
+          <details class="adv">
+            <summary>Advanced</summary>
+            <label for="negativeTags">Avoid (negative tags)</label>
+            <input id="negativeTags" maxlength="1000" placeholder="heavy metal, screaming" />
+
+            <div class="row" id="genderRow">
+              <label for="vocalGender">Vocals</label>
+              <select id="vocalGender">
+                <option value="">Any</option>
+                <option value="f">Female</option>
+                <option value="m">Male</option>
+              </select>
+            </div>
+
+            <label for="styleWeight">Style adherence <output id="swOut">0.65</output></label>
+            <input type="range" id="styleWeight" min="0" max="1" step="0.05" value="0.65" />
+
+            <label for="weird">Weirdness <output id="wdOut">0.5</output></label>
+            <input type="range" id="weird" min="0" max="1" step="0.05" value="0.5" />
+          </details>
+        </div>
+
+        <div class="row opts">
+          <label class="switch">
+            <input type="checkbox" id="instrumental" />
+            <span>Instrumental (no vocals)</span>
+          </label>
+          <select id="model" aria-label="Model">
+            <option value="V6" selected>V6 — latest</option>
+            <option value="V6_MINI">V6 Mini — faster</option>
+            <option value="V6_WILD">V6 Wild — experimental</option>
+            <option value="V5">V5</option>
+            <option value="V4_5PLUS">V4.5 Plus</option>
+            <option value="V4_5ALL">V4.5 All</option>
+            <option value="V4_5">V4.5</option>
+          </select>
+        </div>
+
+        <button class="go" id="go" type="submit">Generate music</button>
+        <p class="error" id="error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section>
+      <div class="lib-head">
+        <h2>Your library</h2>
+        <button type="button" class="link" id="clear">Clear</button>
+      </div>
+      <div id="library" class="library"></div>
+      <p class="empty" id="empty">Songs you generate will appear here.</p>
+    </section>
+  </main>
+
+  <footer class="foot">Powered by <a href="https://sunoapi.org" target="_blank" rel="noopener">sunoapi.org</a></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
